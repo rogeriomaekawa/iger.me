@@ -1,0 +1,16 @@
+#Options +FollowSymLinks
+IndexIgnore */*
+<IfModule mod_rewrite.c>
+RewriteEngine on
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php
+</IfModule>
+<IfModule mod_php5.c>
+php_value max_execution_time 259200
+php_value mysql.connect_timeout 259200
+</IfModule>
