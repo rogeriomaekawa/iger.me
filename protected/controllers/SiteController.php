@@ -365,6 +365,7 @@ class SiteController extends Controller
 			$this->redirect(Yii::app()->createUrl('/site'));
 		}else{	
 			// save this information to db
+			
 			$user = new User();
 			$user->username = $_SESSION['google_data']['email'];
 			$user->email = $_SESSION['google_data']['email'];
@@ -374,12 +375,14 @@ class SiteController extends Controller
 			$user->avatar = $_SESSION['google_data']['picture'];
 			
 			$user->zeroUniqueGoogle();
+				
 			// check if instagram_id is unique then save to db
 			//$user = $user->zeroUniqueGoogle();
 
 			if (!isset(Yii::app()->user->id)) {
+				
 				// login automatically
-				Yii::app()->user->login(UserIdentity::createAuthenticatedIdentity($user->username, $user->id), 0);
+				Yii::app()->user->login(UserIdentity::createAuthenticatedIdentity($user->username, $user->googleIdToId($user->google_id)), 0);
 				$this->redirect(Yii::app()->createUrl("/user/account"));
 			}
 
@@ -430,7 +433,7 @@ class SiteController extends Controller
 				// save this information to db
 				$user = new User();
 				$user->username = $username;
-				$user->email = "facebooklogin@login.com.br";
+				$user->email = $uid."@login.com.br";
 				$user->password = md5($uid);
 				$user->facebook_id = $uid;
 				
@@ -439,7 +442,7 @@ class SiteController extends Controller
 	
 				if (!isset(Yii::app()->user->id)) {
 					// login automatically
-					Yii::app()->user->login(UserIdentity::createAuthenticatedIdentity($user->username, $user->id), 0);
+					Yii::app()->user->login(UserIdentity::createAuthenticatedIdentity($user->username, $user->facebookIdToId($user->email)), 0);
 					$this->redirect(Yii::app()->createUrl("/user/account"));
 				}
 	

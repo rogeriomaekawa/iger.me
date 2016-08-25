@@ -80,7 +80,7 @@ return array(
 			'_apikey' => 'b0d1a8a446be423094215e01c92c4c1a',
             '_apisecret' => 'ea25589dae5e4669a39220e5c774f4bf',
             //'_callbackurl' => 'http://'.$_SERVER['HTTP_HOST'].'/site/success'            
-			'_callbackurl' => 'http://192.168.1.3:8080/iger.me/site/success'            
+			'_callbackurl' => 'http://igerme.dev/site/success'            
         ),
         'paypal' => array(
             'class' => 'ext.paypal.Process',        

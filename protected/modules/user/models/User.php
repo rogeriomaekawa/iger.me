@@ -148,7 +148,7 @@ class User extends CActiveRecord {
 	public function zeroUniqueGoogle()
 	{
 		$user = self::model()->find('google_id=:google_id', array(':google_id' => $this->google_id));
-	
+			
 		if (!isset($user)) {            
 		
 			if($this->save())
@@ -156,24 +156,29 @@ class User extends CActiveRecord {
 			
 			}else{
 				$aErr = $this->getErrors();
-				echo "<pre>";
-				print_r($aErr);
-				echo "</pre>";
-				exit();
 			}
+			
 			if (Yii::app()->user->id)
 			return $this;
 		} else {
+			
 			if (Yii::app()->user->id)
+			
 			return $user;
+
+			print_r($user);		
+
 		}        
 	}
 
 
+
 	public function zeroUniqueFacebook()
 	{
-		$user = self::model()->find('facebook_id=:facebook_id', array(':facebook_id' => $this->facebook_id));
-	
+				
+		$user = self::model()->find('email=:email', array(':email' => $this->email));
+
+				
 		if (!isset($user)) {            
 		
 			if($this->save())
@@ -256,6 +261,24 @@ class User extends CActiveRecord {
 
         return isset($user) ? $user->id : 0;
     } 
+	
+    public static function googleIdToId($google_id = 0) {
+
+        $user = User::model()->find('google_id=:google_id', array(
+            ':google_id' => $google_id
+            ));
+
+        return isset($user) ? $user->id : 0;
+    } 
+
+    public static function facebookIdToId($email = "") {
+
+        $user = User::model()->find('email=:email', array(
+            ':email' => $email
+            ));
+
+        return isset($user) ? $user->id : 0;
+    } 		
 
     /**
      * check a user that is instagram user or not
